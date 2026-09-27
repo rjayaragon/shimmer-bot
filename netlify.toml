@@ -1,0 +1,7 @@
+[build]
+  command = "node scripts/build-knowledge.mjs"
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"

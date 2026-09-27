@@ -1,0 +1,12 @@
+{
+  "name": "shimmer-knotted-bot",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.1",
+    "nodemailer": "^10.0.11"
+  }
+}

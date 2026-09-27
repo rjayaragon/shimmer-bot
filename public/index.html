@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Shimmer & Knotted inbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pine: #1f3b34;
+    --pine-deep: #16302a;
+    --foil: #b8913f;
+    --foil-light: #e3c67a;
+    --pearl: #eef1ef;
+    --paper: #ffffff;
+    --ink: #16201d;
+    --muted: #56625e;
+    --line: #d5dcd9;
+    --oxblood: #7b2330;
+    --oxblood-soft: #f6e9eb;
+    --ok: #2f6b4f;
+    font-family: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--pearl);
+    -webkit-text-size-adjust: 100%;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; line-height: 1.5; font-size: 16px; padding-bottom: env(safe-area-inset-bottom); }
+  button, input { font: inherit; }
+  :focus-visible { outline: 3px solid var(--foil); outline-offset: 2px; }
+  a { color: var(--pine); }
+
+  /* The one bold element: a satin ribbon band with foil lettering. */
+  .ribbon {
+    background: linear-gradient(180deg, #25463e 0%, var(--pine) 45%, var(--pine-deep) 100%);
+    color: var(--foil-light);
+    padding: calc(22px + env(safe-area-inset-top)) 20px 26px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 14px), 0 100%);
+  }
+  .ribbon-inner { max-width: 640px; margin: 0 auto; }
+  .brand { font-size: 0.95rem; font-weight: 500; color: #c9d6d1; margin: 0 0 6px; }
+  .headline {
+    margin: 0;
+    font-size: clamp(1.9rem, 7vw, 2.6rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    background: linear-gradient(100deg, #a67c2e 0%, #e9d08b 38%, #b8913f 60%, #f0dc9f 82%, #a67c2e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .status-line { margin: 10px 0 0; color: #dfe8e4; font-size: 0.95rem; }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
+  .dot.live { background: #7fd3a8; }
+  .dot.test { background: var(--foil-light); }
+  .dot.off { background: #e08a95; }
+
+  main { max-width: 640px; margin: 0 auto; padding: 8px 16px 48px; }
+  section { margin-top: 28px; }
+  h2 { font-size: 1.15rem; margin: 0 0 4px; font-weight: 700; }
+  .hint { color: var(--muted); margin: 0 0 12px; font-size: 0.93rem; }
+
+  .item { background: var(--paper); border: 1px solid var(--line); border-left: 5px solid var(--foil); border-radius: 6px; padding: 14px 16px; margin-bottom: 12px; }
+  .item.urgent { border-left-color: var(--oxblood); }
+  .item-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .who { font-weight: 700; font-size: 1.05rem; }
+  .flag { font-size: 0.85rem; font-weight: 700; color: var(--oxblood); background: var(--oxblood-soft); padding: 2px 8px; border-radius: 99px; }
+  .flag.calm { color: var(--pine); background: #e3ece8; }
+  .summary { margin: 6px 0 8px; }
+  dl.details { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 0 0 12px; font-size: 0.93rem; }
+  dl.details dt { color: var(--muted); }
+  dl.details dd { margin: 0; overflow-wrap: anywhere; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { border: 1px solid var(--pine); background: var(--pine); color: #fff; padding: 9px 14px; border-radius: 6px; cursor: pointer; font-weight: 500; text-decoration: none; display: inline-block; }
+  .btn.quiet { background: transparent; color: var(--pine); }
+  .btn:disabled { opacity: 0.55; cursor: default; }
+
+  .empty { background: var(--paper); border: 1px dashed var(--line); border-radius: 6px; padding: 16px; color: var(--muted); }
+
+  .convo { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 8px; }
+  .convo summary { list-style: none; cursor: pointer; padding: 12px 14px; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; }
+  .convo summary::-webkit-details-marker { display: none; }
+  .convo .name { font-weight: 700; }
+  .convo .when { color: var(--muted); font-size: 0.85rem; text-align: right; }
+  .convo .last { grid-column: 1 / -1; color: var(--muted); font-size: 0.93rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .convo .state { grid-column: 1 / -1; font-size: 0.85rem; }
+  .thread { border-top: 1px solid var(--line); padding: 12px 14px 14px; }
+  .msg { max-width: 88%; padding: 8px 11px; border-radius: 12px; margin: 0 0 8px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.95rem; }
+  .msg.customer { background: #eef1ef; border-bottom-left-radius: 3px; }
+  .msg.bot { background: #e6efe9; margin-left: auto; border-bottom-right-radius: 3px; }
+  .msg.rj { background: #f5eddb; margin-left: auto; border-bottom-right-radius: 3px; }
+  .msg small { display: block; color: var(--muted); font-size: 0.78rem; margin-bottom: 2px; }
+
+  .week { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 0; }
+
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--pine); border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
+  .modes button { border: 0; background: var(--paper); color: var(--pine); padding: 10px 6px; cursor: pointer; font-weight: 500; }
+  .modes button + button { border-left: 1px solid var(--pine); }
+  .modes button[aria-pressed="true"] { background: var(--pine); color: #fff; font-weight: 700; }
+  .mode-help { font-size: 0.93rem; color: var(--muted); margin: 0 0 16px; }
+  .row { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; margin-bottom: 8px; }
+  .reminder.urgent { border-color: var(--oxblood); background: var(--oxblood-soft); }
+  .reminder.warn { border-color: var(--foil); }
+
+  .login { max-width: 360px; margin: 32px auto; padding: 0 16px; }
+  .login label { display: block; font-weight: 500; margin-bottom: 6px; }
+  .login input { width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px; background: var(--paper); }
+  .error { color: var(--oxblood); margin: 0 0 12px; }
+  .toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 6px; font-size: 0.93rem; }
+  @media (prefers-reduced-motion: no-preference) {
+    .toast { animation: rise 0.2s ease-out; }
+    @keyframes rise { from { opacity: 0; transform: translate(-50%, 8px); } }
+  }
+</style>
+</head>
+<body>
+<header class="ribbon">
+  <div class="ribbon-inner">
+    <p class="brand">Shimmer & Knotted inbox</p>
+    <h1 class="headline" id="headline">Checking messages</h1>
+    <p class="status-line" id="status-line"></p>
+  </div>
+</header>
+<main id="app"></main>
+<div id="toast" class="toast" hidden role="status"></div>
+
+<script>
+const app = document.getElementById("app");
+let password = localStorage.getItem("sk-dashboard") || "";
+let data = null;
+let openThread = null;
+
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const manila = (iso, opts = { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) =>
+  iso ? new Date(iso).toLocaleString("en-PH", { timeZone: "Asia/Manila", ...opts }) : "";
+
+function toast(text) {
+  const t = document.getElementById("toast");
+  t.textContent = text;
+  t.hidden = false;
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => (t.hidden = true), 2600);
+}
+
+async function api(method, body) {
+  const r = await fetch("/api/dashboard", {
+    method,
+    headers: { "x-dashboard-password": password, ...(body ? { "content-type": "application/json" } : {}) },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 401) throw Object.assign(new Error("Wrong password."), { auth: true });
+  if (!r.ok) throw new Error(j.error || `Request failed (${r.status}).`);
+  return j;
+}
+
+function showLogin(message = "") {
+  document.getElementById("headline").textContent = "Sign in";
+  document.getElementById("status-line").textContent = "";
+  app.innerHTML = `
+    <form class="login" id="login">
+      ${message ? `<p class="error">${esc(message)}</p>` : ""}
+      <label for="pw">Dashboard password</label>
+      <input id="pw" type="password" autocomplete="current-password" required>
+      <button class="btn" type="submit">Sign in</button>
+    </form>`;
+  document.getElementById("login").onsubmit = (e) => {
+    e.preventDefault();
+    password = document.getElementById("pw").value;
+    localStorage.setItem("sk-dashboard", password);
+    load();
+  };
+  document.getElementById("pw").focus();
+}
+
+async function load() {
+  if (!password) return showLogin();
+  try {
+    data = await api("GET");
+    render();
+  } catch (e) {
+    if (e.auth) {
+      localStorage.removeItem("sk-dashboard");
+      password = "";
+      showLogin("That password did not work. Try again.");
+    } else {
+      app.innerHTML = `<section><p class="error">Could not load the dashboard: ${esc(e.message)}</p><button class="btn" onclick="load()">Try again</button></section>`;
+    }
+  }
+}
+
+async function act(body, done) {
+  try {
+    const r = await api("POST", body);
+    if (done) toast(done);
+    await load();
+    return r;
+  } catch (e) {
+    toast(e.message);
+  }
+}
+
+const modeText = {
+  live: "The bot is replying to every customer.",
+  test: "Testing: the bot only replies to people you added as testers.",
+  off: "The bot is off. Customers get no automatic replies.",
+};
+
+function render() {
+  const { threads, settings, reminders, week, inboxLink } = data;
+  const waiting = threads
+    .filter((t) => t.handoff && t.handoff.status !== "done")
+    .sort((a, b) => Number(b.handoff.urgent) - Number(a.handoff.urgent) || (a.handoff.date_needed || "9").localeCompare(b.handoff.date_needed || "9"));
+
+  document.getElementById("headline").textContent = waiting.length
+    ? `${waiting.length} customer${waiting.length > 1 ? "s need" : " needs"} you`
+    : "Nothing needs you right now";
+  document.getElementById("status-line").innerHTML = `<span class="dot ${settings.mode}"></span>${esc(modeText[settings.mode])}`;
+
+  const detail = (d = {}) => {
+    const rows = [["Product", d.product], ["Quantity", d.quantity], ["Colors", d.colors], ["Text to print", d.text_to_print], ["Date needed", d.date_needed], ["Other", d.other]].filter(([, v]) => v);
+    return rows.length ? `<dl class="details">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : "";
+  };
+
+  const needsYou = waiting.length
+    ? waiting.map((t) => {
+        const h = t.handoff;
+        const flag = h.status === "answered" ? `<span class="flag calm">You replied</span>` : h.urgent ? `<span class="flag">Urgent</span>` : "";
+        return `<article class="item ${h.urgent && h.status !== "answered" ? "urgent" : ""}">
+          <div class="item-top"><span class="who">${esc(t.name || "Customer")}</span>${flag}</div>
+          <p class="summary">${esc(h.summary || h.reason)}</p>
+          ${detail(h.details)}
+          <div class="actions">
+            <a class="btn" href="${esc(inboxLink)}" target="_blank" rel="noopener">Reply in Business Suite</a>
+            <button class="btn quiet" data-done="${esc(t.psid)}">Mark done</button>
+          </div>
+        </article>`;
+      }).join("")
+    : `<p class="empty">When the bot needs you, the customer shows up here with the details already collected.</p>`;
+
+  const now = Date.now();
+  const convoState = (t) => {
+    if (t.handoff && t.handoff.status !== "done") return "Waiting on you";
+    if (t.pausedUntil && new Date(t.pausedUntil).getTime() > now) return `You replied, bot quiet until ${manila(t.pausedUntil)}`;
+    if (settings.mode === "test" && !settings.testers.includes(t.psid)) return "Not a tester, bot not replying";
+    return "Bot is handling this";
+  };
+
+  const conversations = threads.length
+    ? threads.slice(0, 40).map((t) => {
+        const last = t.messages[t.messages.length - 1];
+        const paused = t.pausedUntil && new Date(t.pausedUntil).getTime() > now;
+        const isTester = settings.testers.includes(t.psid);
+        return `<details class="convo" ${openThread === t.psid ? "open" : ""} data-psid="${esc(t.psid)}">
+          <summary>
+            <span class="name">${esc(t.name || "Customer")}</span>
+            <span class="when">${manila(t.lastActivity)}</span>
+            <span class="last">${esc(last ? last.text : "")}</span>
+            <span class="state">${esc(convoState(t))}</span>
+          </summary>
+          <div class="thread">
+            ${t.messages.map((m) => `<p class="msg ${m.by}"><small>${m.by === "customer" ? esc(t.name || "Customer") : m.by === "bot" ? "Bot" : "You"}, ${manila(m.at)}</small>${esc(m.text)}</p>`).join("")}
+            <div class="actions">
+              ${paused ? `<button class="btn quiet" data-resume="${esc(t.psid)}">Let the bot reply again</button>` : ""}
+              ${settings.mode === "test" ? (isTester
+                ? `<button class="btn quiet" data-untester="${esc(t.psid)}">Remove from testers</button>`
+                : `<button class="btn quiet" data-tester="${esc(t.psid)}">Add as tester</button>`) : ""}
+            </div>
+          </div>
+        </details>`;
+      }).join("")
+    : `<p class="empty">No conversations yet. Messages to the Page will appear here as they arrive.</p>`;
+
+  const handled = Math.max(week.conversations - week.handoffs, 0);
+  app.innerHTML = `
+    <section aria-labelledby="h-needs">
+      <h2 id="h-needs">Needs you</h2>
+      <p class="hint">Reply in Business Suite, then mark it done so the bot can help this customer again.</p>
+      ${needsYou}
+    </section>
+
+    <section aria-labelledby="h-week">
+      <h2 id="h-week">This week</h2>
+      <p class="week">${week.customerMessages} customer message${week.customerMessages === 1 ? "" : "s"} across ${week.conversations} conversation${week.conversations === 1 ? "" : "s"}. The bot sent ${week.botReplies} ${week.botReplies === 1 ? "reply" : "replies"}, handled ${handled} on its own, and passed ${week.handoffs} to you.</p>
+    </section>
+
+    <section aria-labelledby="h-convos">
+      <h2 id="h-convos">Conversations</h2>
+      <p class="hint">Tap one to see exactly what the bot said.</p>
+      ${conversations}
+    </section>
+
+    <section aria-labelledby="h-settings">
+      <h2 id="h-settings">Bot settings</h2>
+      <div class="modes" role="group" aria-label="Bot mode">
+        ${["off", "test", "live"].map((m) => `<button data-mode="${m}" aria-pressed="${settings.mode === m}">${{ off: "Off", test: "Testing", live: "Live" }[m]}</button>`).join("")}
+      </div>
+      <p class="mode-help">${esc(modeText[settings.mode])}${settings.mode === "test" ? ` Testers: ${settings.testers.length}.` : ""}</p>
+      <div class="row" id="page-row">
+        <strong>Facebook Page connection</strong>
+        <p class="hint" id="page-status" style="margin:4px 0 10px">Checking.</p>
+        <button class="btn quiet" id="connect" hidden>Connect the Page to the bot</button>
+      </div>
+      ${reminders.map((r) => `<p class="row reminder ${r.level}">${esc(r.text)}</p>`).join("")}
+      <p class="hint"><button class="btn quiet" id="signout">Sign out</button></p>
+    </section>`;
+
+  app.querySelectorAll("[data-done]").forEach((b) => (b.onclick = () => act({ action: "done", psid: b.dataset.done }, "Marked done. The bot can reply to this customer again.")));
+  app.querySelectorAll("[data-resume]").forEach((b) => (b.onclick = () => act({ action: "resume", psid: b.dataset.resume }, "The bot will reply to this customer again.")));
+  app.querySelectorAll("[data-tester]").forEach((b) => (b.onclick = () => act({ action: "addTester", psid: b.dataset.tester }, "Added as a tester.")));
+  app.querySelectorAll("[data-untester]").forEach((b) => (b.onclick = () => act({ action: "removeTester", psid: b.dataset.untester }, "Removed from testers.")));
+  app.querySelectorAll("[data-mode]").forEach((b) => (b.onclick = () => {
+    if (b.dataset.mode === data.settings.mode) return;
+    if (b.dataset.mode === "live" && !confirm("Go live? The bot will start replying to every customer.")) return;
+    act({ action: "mode", mode: b.dataset.mode }, { off: "Bot turned off.", test: "Bot set to testing.", live: "Bot is live." }[b.dataset.mode]);
+  }));
+  app.querySelectorAll("details.convo").forEach((d) => (d.ontoggle = () => { if (d.open) openThread = d.dataset.psid; else if (openThread === d.dataset.psid) openThread = null; }));
+  document.getElementById("signout").onclick = () => { localStorage.removeItem("sk-dashboard"); password = ""; showLogin(); };
+  checkPage();
+}
+
+let pageStatus = null; // checked once per visit, not on every refresh
+async function checkPage() {
+  const status = document.getElementById("page-status");
+  const btn = document.getElementById("connect");
+  try {
+    const r = pageStatus || (pageStatus = await api("POST", { action: "pageStatus" }));
+    status.textContent = r.connected ? "Connected. The bot receives new messages." : "Not connected yet. The bot will not see any messages until you connect it.";
+    btn.hidden = r.connected;
+  } catch (e) {
+    status.textContent = `Could not check: ${e.message}`;
+    btn.hidden = false;
+  }
+  btn.onclick = async () => {
+    btn.disabled = true;
+    try {
+      const r = (pageStatus = await api("POST", { action: "connectPage" }));
+      status.textContent = r.connected ? "Connected. The bot receives new messages." : "Facebook did not confirm the connection. Check the setup guide.";
+      btn.hidden = r.connected;
+      toast(r.connected ? "Page connected." : "Not connected yet.");
+    } catch (e) {
+      status.textContent = `Could not connect: ${e.message}`;
+    }
+    btn.disabled = false;
+  };
+}
+
+document.addEventListener("visibilitychange", () => { if (!document.hidden && password) load(); });
+setInterval(() => { if (!document.hidden && password && data) load(); }, 60000);
+load();
+</script>
+</body>
+</html>
