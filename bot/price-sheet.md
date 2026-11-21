@@ -1,6 +1,6 @@
 # Shimmer & Knotted: Bot Price Sheet
 
-Source: PRODUCT COSTING tab of Shimmer_Knotted_Financials_May2026.xlsx, plus RJ's confirmations (Sept 28, 2026). This is the only price information the Messenger bot may quote. If a price is not on this sheet, the bot hands the conversation to RJ.
+Source: PRODUCT COSTING tab of Shimmer_Knotted_Financials_May2026.xlsx, plus RJ's confirmations (Sept 28, 2026; walk-in hours corrected Nov 21, 2026). This is the only price information the Messenger bot may quote. If a price is not on this sheet, the bot hands the conversation to RJ.
 
 ## What we make
 
@@ -88,7 +88,7 @@ Nylon only, no woven cotton.
 - Official receipts issued. DTI and BIR registered.
 - Rush (under 5 days): may be possible for an added fee. The bot does not quote a rush price; it hands off to RJ.
 - Handoff or delivery: arranged case by case. No fixed delivery fee.
-- Shop: Unit 2, Aganan Mini Market, Pavia, Iloilo. Walk-ins Mon–Fri, 8am–4pm. Online inquiries any time.
+- Shop: Unit 2, Aganan Mini Market, Pavia, Iloilo. Walk-ins Mon–Fri, 7am–4pm. Online inquiries any time.
 - Service area: Iloilo City, Pavia, Roxas City, Antique, and Region 6.
 
 ## Never share with customers
