@@ -24,7 +24,7 @@ The customer chooses the ribbon color and the foil color. The Ribbon Designer le
 
 ## Ceremonial ribbon (ribbon-cutting set, per set; RJ, Nov 17, 2026)
 
-Each set is a 2 inch (50mm) custom-printed ribbon plus 2 colored ribbon balls, each ball made with 1.5 meters of custom-printed ribbon.
+Each set is a 2 inch (50mm) custom-printed ribbon plus 1 ribbon ball made in 2 colors, one layered on top of the other. The ball has 1.5 meters of custom-printed ribbon hanging down from it when set up (RJ, Nov 24, 2026).
 
 | Ribbon length | Price per set |
 |---|---|
