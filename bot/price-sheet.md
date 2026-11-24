@@ -1,10 +1,10 @@
 # Shimmer & Knotted: Bot Price Sheet
 
-Source: PRODUCT COSTING tab of Shimmer_Knotted_Financials_May2026.xlsx, plus RJ's confirmations (Sept 28, 2026). This is the only price information the Messenger bot may quote. If a price is not on this sheet, the bot hands the conversation to RJ.
+Source: PRODUCT COSTING tab of Shimmer_Knotted_Financials_May2026.xlsx, plus RJ's confirmations (Sept 28, 2026; ceremonial ribbon added Nov 17, 2026; leis added Nov 18, 2026; walk-in hours and 50-yard roll length confirmed Nov 21, 2026; acrylic medals added Nov 24, 2026). This is the only price information the Messenger bot may quote. If a price is not on this sheet, the bot hands the conversation to RJ.
 
 ## What we make
 
-Custom foil printing on satin ribbons, thermal labels, clear PET labels, and nylon wash tags. Also full-color printed sticker sheets and graduation ribbons. All designs are customized with the customer's name, brand, or logo.
+Custom foil printing on satin ribbons, thermal labels, clear PET labels, and nylon wash tags. Also full-color printed sticker sheets, graduation ribbons, ceremonial (ribbon-cutting) ribbons, ribbon leis and acrylic medals. All designs are customized with the customer's name, brand, or logo.
 
 Foil colors: black, white, silver, gold, blue, red, yellow, green. We do not have rose gold or holographic foil. "Holographic" means the holo rainbow photo top laminate on A4 sticker sheets only. If a customer asks for holographic ribbons, labels, or wash tags, explain that holographic is available on sticker sheets, not on foil-printed items.
 
@@ -20,7 +20,34 @@ Foil colors: black, white, silver, gold, blue, red, yellow, green. We do not hav
 
 Bulk discounts (same color and width): 3–5 rolls 5% off, 6–11 rolls 10% off, 12–24 rolls 15% off, 25–49 rolls 18% off. For 50+ rolls, hand off to RJ.
 
-The customer chooses the ribbon color and the foil color. The Ribbon Preview Tool lets them see their name on a ribbon first: https://shimmerandknottedlabels.netlify.app/
+The customer chooses the ribbon color and the foil color. The Ribbon Designer lets them see their name on a ribbon first: https://shimmerandknottedlabels.com/ribbon-designer
+
+## Ceremonial ribbon (ribbon-cutting set, per set; RJ, Nov 17, 2026)
+
+Each set is a 2 inch (50mm) custom-printed ribbon plus 2 colored ribbon balls, each ball made with 1.5 meters of custom-printed ribbon.
+
+| Ribbon length | Price per set |
+|---|---|
+| 4 meters | ₱849 |
+| 6 meters | ₱899 |
+
+## Ribbon leis (per piece; RJ, Nov 18, 2026)
+
+Simple lei: ribbon worn around the neck with a round ribbon piece and the customer's logo or name in the middle. **₱120 each.**
+
+The bot quotes ₱120 only for the simple lei. Anything more elaborate (extra layers, flowers, medals, special materials, a design the customer describes beyond the simple style) or a large quantity: hand off to RJ.
+
+Anything else for a ribbon-cutting (other ribbon lengths, extra ribbon balls, scissors, trays) is not priced here: hand off to RJ.
+
+## Acrylic medals (per piece; RJ, Nov 24, 2026)
+
+| Quantity | Price per piece |
+|---|---|
+| 1–40 pcs | ₱90 |
+| 41–80 pcs | ₱85 |
+| 81 pcs and up | ₱80 |
+
+Price per piece, by total pieces ordered. Ask for the design, size, quantity and date needed. If the customer asks what is included (size limits, thickness, ribbon or lanyard), or wants other medal types, hand off to RJ.
 
 ## Thermal labels (per roll)
 
@@ -88,7 +115,7 @@ Nylon only, no woven cotton.
 - Official receipts issued. DTI and BIR registered.
 - Rush (under 5 days): may be possible for an added fee. The bot does not quote a rush price; it hands off to RJ.
 - Handoff or delivery: arranged case by case. No fixed delivery fee.
-- Shop: Unit 2, Aganan Mini Market, Pavia, Iloilo. Walk-ins Mon–Fri, 8am–4pm. Online inquiries any time.
+- Shop: Unit 2, Aganan Mini Market, Pavia, Iloilo. Walk-ins Mon–Fri, 7am–4pm; closed for walk-ins on weekends. Online inquiries any time.
 - Service area: Iloilo City, Pavia, Roxas City, Antique, and Region 6.
 
 ## Never share with customers
